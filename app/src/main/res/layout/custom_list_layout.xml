@@ -67,7 +67,7 @@
 
             <TextView
 
-                android:id="@+id/Subject"
+                android:id="@+id/SubjectName"
 
                 android:layout_width="0dp"
 

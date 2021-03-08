@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.nfc.Tag;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -27,7 +28,8 @@ public class MainActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     List<Subject> subjects;
 
-    private String JSON_URL="http://localhost:8080/api/subject";
+
+    private String JSON_URL="http://192.168.1.113:8080/api/subject";
     Adapter adapter;
 
     @Override
@@ -36,42 +38,41 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         recyclerView=findViewById(R.id.subjectsList);
         subjects=new ArrayList<>();
-         extractSubjects();
 
-//         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-//         adapter = new Adapter(this,subjects);
-//         recyclerView.setAdapter(adapter);
+         extractSubjects();
 
     }
 
     private void extractSubjects() {
         RequestQueue queue= Volley.newRequestQueue(this);
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, JSON_URL, null, new Response.Listener<JSONArray>() {
-            @Override
-            public void onResponse(JSONArray response) {
-                for (int i=0; i< response.length();i++){
-                    try {
-                        JSONObject subjectObject = response.getJSONObject(i);
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, JSON_URL,null, new Response.Listener<JSONArray>() {
 
-                        Subject subject = new Subject();
-                        subject.setName(subjectObject.getString("name").toString());
-                        subject.setImageURL(subjectObject.getString("image"));
+                    @Override
+                    public void onResponse(JSONArray response) {
 
-                        subjects.add(subject);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+                        for (int i=0; i< response.length();i++){
+                            try {
+                                JSONObject subjectObject = response.getJSONObject(i);
+
+                                Subject subject = new Subject();
+                                subject.setName(subjectObject.getString("name").toString());
+                                subject.setImageURL(subjectObject.getString("image"));
+
+                                subjects.add(subject);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                        recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+                        adapter = new Adapter(getApplicationContext(),subjects);
+                        recyclerView.setAdapter(adapter);
                     }
-                }
-                recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-                adapter = new Adapter(getApplicationContext(),subjects);
-                recyclerView.setAdapter(adapter);
-            }
-        }, new Response.ErrorListener(){
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.d("tag", "onErrorResponse: " + error.getMessage());
-            }
-        });
+                }, new Response.ErrorListener(){
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.d("tag", "onErrorResponse: " + error.getMessage());
+                    }
+                });
         queue.add(jsonArrayRequest);
     }
 }
