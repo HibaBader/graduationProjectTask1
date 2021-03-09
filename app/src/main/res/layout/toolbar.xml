@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/primary"
+
+
+    >
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:src="@drawable/ic_baseline_account_circle_24"
+            android:layout_alignParentRight="true"
+            android:id="@+id/account">
+
+        </ImageView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/appName"
+            android:text="CS Community"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
+            android:textSize="20dp"
+            android:textColor="@color/purple_500"
+
+            >
+
+        </TextView>
+
+     </RelativeLayout>
+
+</RelativeLayout>

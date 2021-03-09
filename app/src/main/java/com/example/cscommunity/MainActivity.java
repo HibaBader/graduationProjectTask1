@@ -1,13 +1,17 @@
 package com.example.cscommunity;
 
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.nfc.Tag;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toolbar;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -32,12 +36,19 @@ public class MainActivity extends AppCompatActivity {
     private String JSON_URL="http://192.168.1.113:8080/api/subject";
     Adapter adapter;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         recyclerView=findViewById(R.id.subjectsList);
         subjects=new ArrayList<>();
+
+        ImageView accountCircle = findViewById(R.id.account);
+        TextView title = findViewById(R.id.appName);
+
+
+         
 
          extractSubjects();
 
